@@ -7,14 +7,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class SpaceInvaders extends JFrame implements Runnable {
-    static final int WINDOW_WIDTH = 600;
-    static final int WINDOW_HEIGHT = 800;
-    final int XBORDER = 40;
-    final int YBORDER = 40;
-    final int YTITLE = 25;
     boolean animateFirstTime = true;
-    int xsize = -1;
-    int ysize = -1;
     Image image;
     Graphics2D g;
 
@@ -23,7 +16,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
     static SpaceInvaders frame;
     public static void main(String[] args) {
         frame = new SpaceInvaders();
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setSize(Window.WINDOW_WIDTH, Window.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -85,20 +78,20 @@ public class SpaceInvaders extends JFrame implements Runnable {
 
 ////////////////////////////////////////////////////////////////////////////
     public void paint(Graphics gOld) {
-        if (image == null || xsize != getSize().width || ysize != getSize().height) {
-            xsize = getSize().width;
-            ysize = getSize().height;
-            image = createImage(xsize, ysize);
+        if (image == null || Window.xsize != getSize().width ||Window. ysize != getSize().height) {
+            Window.xsize = getSize().width;
+            Window.ysize = getSize().height;
+            image = createImage(Window.xsize, Window.ysize);
             g = (Graphics2D) image.getGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
         }
 
         g.setColor(Color.black);
-        g.fillRect(0, 0, xsize, ysize);
+        g.fillRect(0, 0, Window.xsize, Window.ysize);
 
-        int x[] = {getX(0), getX(getWidth2()), getX(getWidth2()), getX(0), getX(0)};
-        int y[] = {getY(0), getY(0), getY(getHeight2()), getY(getHeight2()), getY(0)};
+        int x[] = {Window.getX(0), Window.getX(Window.getWidth2()), Window.getX(Window.getWidth2()), Window.getX(0), Window.getX(0)};
+        int y[] = {Window.getY(0), Window.getY(0), Window.getY(Window.getHeight2()), Window.getY(Window.getHeight2()), Window.getY(0)};
  
         g.setColor(Color.black);
         g.fillPolygon(x, y, 4);
@@ -190,9 +183,9 @@ public class SpaceInvaders extends JFrame implements Runnable {
     public void animate() {
         if (animateFirstTime) {
             animateFirstTime = false;
-            if (xsize != getSize().width || ysize != getSize().height) {
-                xsize = getSize().width;
-                ysize = getSize().height;
+            if (Window.xsize != getSize().width || Window.ysize != getSize().height) {
+                Window.xsize = getSize().width;
+                Window.ysize = getSize().height;
             }
          
             reset();
@@ -214,26 +207,5 @@ public class SpaceInvaders extends JFrame implements Runnable {
             relaxer.stop();
         }
         relaxer = null;
-    }
-/////////////////////////////////////////////////////////////////////////
-    public int getX(int x) {
-        return (x + XBORDER);
-    }
-
-    public int getY(int y) {
-        return (y + YBORDER + YTITLE);
-    }
-
-    public int getYNormal(int y) {
-        return (-y + YBORDER + YTITLE + getHeight2());
-    }
-    
-    
-    public int getWidth2() {
-        return (xsize - getX(0) - XBORDER);
-    }
-
-    public int getHeight2() {
-        return (ysize - getY(0) - YBORDER);
     }
 }
