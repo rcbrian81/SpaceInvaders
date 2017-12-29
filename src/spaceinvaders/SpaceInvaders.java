@@ -10,6 +10,8 @@ public class SpaceInvaders extends JFrame implements Runnable {
     boolean animateFirstTime = true;
     Image image;
     Graphics2D g;
+    
+    Image backgroundImage;
 
     
     
@@ -87,22 +89,24 @@ public class SpaceInvaders extends JFrame implements Runnable {
                     RenderingHints.VALUE_ANTIALIAS_ON);
         }
 
-        g.setColor(Color.black);
+        g.setColor(Color.BLUE);
         g.fillRect(0, 0, Window.xsize, Window.ysize);
 
         int x[] = {Window.getX(0), Window.getX(Window.getWidth2()), Window.getX(Window.getWidth2()), Window.getX(0), Window.getX(0)};
         int y[] = {Window.getY(0), Window.getY(0), Window.getY(Window.getHeight2()), Window.getY(Window.getHeight2()), Window.getY(0)};
  
-        g.setColor(Color.black);
+        g.setColor(Color.yellow);
         g.fillPolygon(x, y, 4);
 
-        g.setColor(Color.black);
+        g.setColor(Color.GREEN);
         g.drawPolyline(x, y, 5);
 
         if (animateFirstTime) {
             gOld.drawImage(image, 0, 0, null);
             return;
         }
+        
+        g.drawImage(backgroundImage, Window.getX(0), Window.getY(0), Window.getWidth2(), Window.getHeight2(), this);
  
         gOld.drawImage(image, 0, 0, null);
     }
@@ -189,7 +193,8 @@ public class SpaceInvaders extends JFrame implements Runnable {
             }
          
             reset();
-
+            
+            backgroundImage = Toolkit.getDefaultToolkit().getImage("./images/background.jpg");
         }
         
     }
