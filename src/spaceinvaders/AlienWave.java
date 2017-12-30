@@ -38,7 +38,7 @@ public class AlienWave {
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE}
@@ -48,12 +48,11 @@ public class AlienWave {
     AlienWave(Alien.Type wave[][]){
         System.out.println(wave.length);
         System.out.println(wave[0].length);
-        int num = wave.length * 2;
-        xdelta = Window.getWidth2()/ num;
-        ydelta = (Window.getHeight2() / 2) / num;
         
+        ydelta = (Window.getHeight2() / 2) / (wave.length * 2);
         for(int y=0;y<wave.length;y++){
             for(int x=0;x<wave[y].length;x++){
+                xdelta = Window.getWidth2()/ (wave[y].length * 2);
                 if(wave[y][x] != null){
                     switch(wave[y][x]){
                         case TIE : 
