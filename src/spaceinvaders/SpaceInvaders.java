@@ -12,6 +12,14 @@ public class SpaceInvaders extends JFrame implements Runnable {
     Graphics2D g;
     
     Image backgroundImage;
+    Image MillenniumFalconImage;
+    Image TIEFighterImage;
+    Falcon player = Falcon.player;
+    
+    double frameRate = 100.0;
+    int timeCount;
+    
+    boolean inGame = false;
 
     
     
@@ -26,10 +34,13 @@ public class SpaceInvaders extends JFrame implements Runnable {
     public SpaceInvaders() {
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                if (e.BUTTON1 == e.getButton()) {
-                    
-          
-                   
+                if (e.BUTTON1 == e.getButton()) { 
+                    System.out.println("regular: " + e.getX() + "," + e.getY());
+                    System.out.println("window: " + Window.getX(e.getX()) + "," + Window.getY(e.getY()));
+                    System.out.println("noraml: " + Window.getX(e.getX()) + "," + Window.getYNormal(e.getY()));
+                    System.out.println("height: " + Window.getHeight2());
+                    System.out.println("width2: " + Window.getWidth2());
+                    System.out.println("width2: " + Window.getY(0));
                 }
                 if (e.BUTTON3 == e.getButton()) {
                     
@@ -47,8 +58,6 @@ public class SpaceInvaders extends JFrame implements Runnable {
 
     addMouseMotionListener(new MouseMotionAdapter() {
       public void mouseMoved(MouseEvent e) {
-
-
         repaint();
       }
     });
@@ -59,7 +68,13 @@ public class SpaceInvaders extends JFrame implements Runnable {
                 if (e.VK_UP == e.getKeyCode()) {
                 } else if (e.VK_DOWN == e.getKeyCode()) {
                 } else if (e.VK_LEFT == e.getKeyCode()) {
+                    player.moveXPosBy(-25);
                 } else if (e.VK_RIGHT == e.getKeyCode()) {
+                    player.moveXPosBy(25);
+                }else if (e.VK_SPACE == e.getKeyCode()) {
+                    player.fireLaser();
+                }else if (e.VK_ENTER == e.getKeyCode()) {
+                    inGame = true;
                 }
                 repaint();
             }
@@ -105,14 +120,22 @@ public class SpaceInvaders extends JFrame implements Runnable {
             gOld.drawImage(image, 0, 0, null);
             return;
         }
-        
+        //Draws Background
         g.drawImage(backgroundImage, Window.getX(0), Window.getY(0), Window.getWidth2(), Window.getHeight2(), this);
- 
+        //Draws Lasers
+        Laser.drawAllLasers(g);
+        //Draws Playerd
+        player.draw(g,this);
+        
+        g.setColor(Color.GREEN);
+        g.drawRect(Window.getX(0),Window.getYNormal(0),Window.getWidth2(),Window.getHeight2());
+        
+        Alien.drawAllAliens(g, this);
+        
         gOld.drawImage(image, 0, 0, null);
     }
 
 ////////////////////////////////////////////////////////////////////////////
-
     public void drawAlien(int xpos,int ypos,double rot,
     double xscale,double yscale,int value)
     {
@@ -131,38 +154,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
         g.scale( 1.0/xscale,1.0/yscale );
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);
-    }          
-////////////////////////////////////////////////////////////////////////////
-    public void drawCannon(int xpos,int ypos,double rot,
-            double xscale,double yscale)
-    {
-        g.translate(xpos,ypos);
-        g.rotate(rot  * Math.PI/180.0);
-        g.scale( xscale , yscale );    
-        
-        int xvals[] = {0,10,10,-10,-10,0};
-        int yvals[] = {-15,-10,10,10,-10,-15};
-        g.fillPolygon(xvals,yvals,xvals.length);
-       
-        g.scale( 1.0/xscale,1.0/yscale );
-        g.rotate(-rot  * Math.PI/180.0);
-        g.translate(-xpos,-ypos);
-    }
-  
-////////////////////////////////////////////////////////////////////////////
-    public void drawCannonBall(int xpos,int ypos,double rot,double xscale,double yscale)
-    {
-        g.translate(xpos,ypos);
-        g.rotate(rot  * Math.PI/180.0);
-        g.scale( xscale , yscale );
-
-      
-        g.fillOval(-10,-10,20,20);
-
-        g.scale( 1.0/xscale,1.0/yscale );
-        g.rotate(-rot  * Math.PI/180.0);
-        g.translate(-xpos,-ypos);
-    }
+    } 
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -170,7 +162,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
         while (true) {
             animate();
             repaint();
-            double seconds = .01;    
+            double seconds = 1.0 / frameRate;    
             int miliseconds = (int) (1000.0 * seconds);
             try {
                 Thread.sleep(miliseconds);
@@ -195,7 +187,15 @@ public class SpaceInvaders extends JFrame implements Runnable {
             reset();
             
             backgroundImage = Toolkit.getDefaultToolkit().getImage("./images/background.jpg");
+            MillenniumFalconImage = Toolkit.getDefaultToolkit().getImage("./images/MillenniumFalcon.png");
+            TIEFighterImage = Toolkit.getDefaultToolkit().getImage("./images/TIE_Fighter.png");
+            Falcon.initPlayer();
+            player = Falcon.player; 
         }
+        if (timeCount % (int)(frameRate*1) == (int)(frameRate*1-1))
+            Alien.moveAliens();
+        timeCount++;
+        
         
     }
 

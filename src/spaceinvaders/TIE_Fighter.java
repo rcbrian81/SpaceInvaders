@@ -9,6 +9,9 @@ package spaceinvaders;
  *
  * @author briansanchez
  */
-public class BossShip {
+public class TIE_Fighter extends Alien {
     
+    TIE_Fighter(int _xpos,int _ypos){
+        super(_xpos,_ypos);
+    }
 }

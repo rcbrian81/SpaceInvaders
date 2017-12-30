@@ -26,6 +26,16 @@ public class Window {
 
     public static int getY(int y) {
 //        return (y + YBORDER + YTITLE );
+        return (y+22);
+        
+    }
+    
+    public static double getDoubleX(double x) {
+        return (x);
+    }
+
+    public static double getDoubeY(double y) {
+//        return (y + YBORDER + YTITLE );
         return (y);
         
     }
@@ -35,7 +45,11 @@ public class Window {
       return (-y + getHeight2());
         
     }
-    
+//regular: 526,118
+//window: 526,118
+//noraml: 526,655
+//height: 773
+//width2: 800
     public static int getWidth2() {
         return (xsize);
     }
