@@ -70,23 +70,6 @@ public class EnemyWave {
         {TIE,null,TIE,null,null,TIE,null,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
     };
-// 1. Delay every laser shot by one second/ Implement a one second reload time for player
-// 2. Creat a Menu class
-// 3. Create a Game class that the menu will use to start a new game
-//  a  Create a Round class to be used ny game Class
-// 4. Implement Lives
-// 5.Implement a point system
-// **Text Jackson and Noah to design maps and possibley do the collide code
-// or just make the collide code yourSelf and hace them implement the metor
-// and other power ups like lives are floating power ups to to shoot or crash into
-    
-//    {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-//        {TIE,TIE,TIE,TIE,TIE,TIE,},
-//        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-//        {TIE,TIE,TIE,TIE},
-//        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-//        {TIE,TIE,TIE,TIE,TIE,TIE},
-//        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
     EnemyWave(Ship.Type wave[][]){
         ydelta = (Window.getHeight2() / 2) / (wave.length * 2);
         for(int y=0;y<wave.length;y++){
