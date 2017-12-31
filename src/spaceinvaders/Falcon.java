@@ -30,7 +30,6 @@ public class Falcon {
     Falcon(){
         xpos = Window.getWidth2()/2;
         System.out.println(xpos+ "," + ypos);
-        new AlienWave(AlienWave.wave5);
     }
     
     public void fireLaser(){

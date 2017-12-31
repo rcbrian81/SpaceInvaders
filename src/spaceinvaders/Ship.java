@@ -7,20 +7,20 @@ package spaceinvaders;
 
 import java.awt.*;
 import java.util.ArrayList;
-
 /**
  *
  * @author briansanchez
  */
-public abstract class Alien {
-    static ArrayList<Alien> aliens = new ArrayList<Alien>();
+public class Ship {
     Image image;
+    Type type;
+    
     int xpos;
     int ypos;
     int width;
     int height;
     
-    static int moveDistance = 15;
+    
     
     Color color;
     int laseHeight;
@@ -28,34 +28,18 @@ public abstract class Alien {
     int laserSpeed;
     
     enum Type{
-        TIE,Tank,Mother,
+        Falcon,TIE,Tank,Mother,
     }
     
-    Alien(int _xpos,int _ypos){
+    Ship(int _xpos,int _ypos){
         xpos = _xpos;
         ypos = _ypos;
-        aliens.add(this);
-    }
-    
-    public static void moveAliens(){
-        //int move = (int)(Math.random() * 4);
-        for(Alien alien : aliens){
-            int move = (int)(Math.random() * 4);
-            
-            if(move > 2)
-                alien.ypos -= moveDistance;
-            else
-                alien.ypos += moveDistance;
-        }
     }
     ///////////////// Draw Code ////////////////////////////////////////////////////
-    public static void drawAllAliens(Graphics2D g,SpaceInvaders main){
+    public  void draw(Graphics2D g,SpaceInvaders main){
         
-        for(Alien alien : aliens){
-        
-        drawShipImage(g,Window.getX(alien.xpos),Window.getY(alien.ypos),
+        drawShipImage(g,Window.getX(xpos),Window.getY(ypos),
         0,.1,.1,main);
-        }
         
     }
     private static void drawShipImage(Graphics2D g,int xpos,int ypos,
@@ -72,6 +56,4 @@ public abstract class Alien {
         g.scale( 1.0/xscale,1.0/yscale );
         g.translate(-xpos,-ypos);
     }
-    
-    
 }

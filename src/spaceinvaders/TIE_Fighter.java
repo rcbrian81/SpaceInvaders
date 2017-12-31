@@ -9,7 +9,7 @@ package spaceinvaders;
  *
  * @author briansanchez
  */
-public class TIE_Fighter extends Alien {
+public class TIE_Fighter extends Ship {
     
     TIE_Fighter(int _xpos,int _ypos){
         super(_xpos,_ypos);

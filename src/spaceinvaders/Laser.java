@@ -39,7 +39,6 @@ public class Laser {
                 width = Falcon.laserWidth;
                 height = Falcon.laserHieght;
                 speed = Falcon.laserSpeed;
-            //    falconLasers.add(this);
         }
         
         allLasers.add(this);
@@ -56,15 +55,6 @@ public class Laser {
             num++;
         }
         
-//        Iterator<Laser> iter = allLasers.iterator();
-//        while(iter.hasNext()){
-//            Laser laser = iter.next();
-//            
-//            if(laser.ypos < 0){
-//                laser.remove();
-//            }
-//        }
-        
         for (Iterator<Laser> iterator = allLasers.iterator(); iterator.hasNext(); ) {
         Laser laser = iterator.next();
         if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
@@ -75,11 +65,6 @@ public class Laser {
     }
     
     public void delete(){
-        switch(type){
-            case falcon:
-              //  falconLasers.remove(this);
-        }
-        
         allLasers.remove(this);
     }
     

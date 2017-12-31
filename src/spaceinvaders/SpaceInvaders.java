@@ -19,7 +19,9 @@ public class SpaceInvaders extends JFrame implements Runnable {
     double frameRate = 100.0;
     int timeCount;
     
-    boolean inGame = false;
+    EnemyWave currentEnemyWave;
+    
+    boolean inGame;
 
     
     
@@ -36,11 +38,17 @@ public class SpaceInvaders extends JFrame implements Runnable {
             public void mousePressed(MouseEvent e) {
                 if (e.BUTTON1 == e.getButton()) { 
                     System.out.println("regular: " + e.getX() + "," + e.getY());
-                    System.out.println("window: " + Window.getX(e.getX()) + "," + Window.getY(e.getY()));
-                    System.out.println("noraml: " + Window.getX(e.getX()) + "," + Window.getYNormal(e.getY()));
-                    System.out.println("height: " + Window.getHeight2());
-                    System.out.println("width2: " + Window.getWidth2());
-                    System.out.println("width2: " + Window.getY(0));
+//                    System.out.println("window: " + Window.getX(e.getX()) + "," + Window.getY(e.getY()));
+////                    System.out.println("noraml: " + Window.getX(e.getX()) + "," + Window.getYNormal(e.getY()));
+//                    System.out.println("height: " + Window.getHeight2());
+//                    System.out.println("width2: " + Window.getWidth2());
+//                    System.out.println("width2: " + Window.getY(0));
+
+
+//                    System.out.println("Menu: " + Menu.getX(e.getX()) + "," + Menu.getY(e.getY()));
+//                    System.out.println();
+                    if(Menu.isOpen())
+                        Menu.checkForPressedButton(e.getX(),e.getY());
                 }
                 if (e.BUTTON3 == e.getButton()) {
                     
@@ -68,13 +76,19 @@ public class SpaceInvaders extends JFrame implements Runnable {
                 if (e.VK_UP == e.getKeyCode()) {
                 } else if (e.VK_DOWN == e.getKeyCode()) {
                 } else if (e.VK_LEFT == e.getKeyCode()) {
-                    player.moveXPosBy(-25);
+                    if(inGame)
+                        player.moveXPosBy(-25);
                 } else if (e.VK_RIGHT == e.getKeyCode()) {
-                    player.moveXPosBy(25);
+                    if(inGame)
+                        player.moveXPosBy(25);
                 }else if (e.VK_SPACE == e.getKeyCode()) {
-                    player.fireLaser();
+                    if(inGame)
+                        player.fireLaser();
                 }else if (e.VK_ENTER == e.getKeyCode()) {
-                    inGame = true;
+                    if(!Menu.isOpen() && !inGame)
+                        inGame = true;
+                    else if(!Menu.isOpen() && inGame)
+                        inGame = false;
                 }
                 repaint();
             }
@@ -130,31 +144,25 @@ public class SpaceInvaders extends JFrame implements Runnable {
         g.setColor(Color.GREEN);
         g.drawRect(Window.getX(0),Window.getYNormal(0),Window.getWidth2(),Window.getHeight2());
         
-        Alien.drawAllAliens(g, this);
+        currentEnemyWave.drawEnemyShips(g, this);
+        
+        if(Menu.isOpen())
+            Menu.drawMain(g);
         
         gOld.drawImage(image, 0, 0, null);
     }
 
 ////////////////////////////////////////////////////////////////////////////
-    public void drawAlien(int xpos,int ypos,double rot,
-    double xscale,double yscale,int value)
-    {
-        g.translate(xpos,ypos);
-        g.rotate(rot  * Math.PI/180.0);
-        g.scale( xscale , yscale );
-
-        int xval[] = {10,-10,-10,-5,-10,0,10,5,10};
-        int yval[] = {-20,-20,-5,-5,10,0,10,-5,-5};
-        g.fillPolygon(xval,yval,xval.length);             
-        
-        g.setColor(Color.black);
-        g.setFont(new Font("Arial",Font.PLAIN,16));
-        g.drawString("" + value, 0, 0);        
-                
-        g.scale( 1.0/xscale,1.0/yscale );
-        g.rotate(-rot  * Math.PI/180.0);
-        g.translate(-xpos,-ypos);
-    } 
+    public void InitNewGame(){
+        Menu.init();
+        inGame = false;
+        currentEnemyWave = new EnemyWave(EnemyWave.wave5);
+    }
+    public void checkForButtonPressed(int x, int y){
+        if(!Menu.isOpen()){
+            
+        }
+    }
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -173,7 +181,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
 /////////////////////////////////////////////////////////////////////////
     public void reset() {
 
-        
+        InitNewGame();
     }
 /////////////////////////////////////////////////////////////////////////
     public void animate() {
@@ -192,9 +200,10 @@ public class SpaceInvaders extends JFrame implements Runnable {
             Falcon.initPlayer();
             player = Falcon.player; 
         }
-        if (timeCount % (int)(frameRate*1) == (int)(frameRate*1-1))
-            Alien.moveAliens();
-        timeCount++;
+        if(inGame && timeCount % (int)(frameRate*1) == (int)(frameRate*1-1)){
+            currentEnemyWave.move();
+        }
+            timeCount++;
         
         
     }
