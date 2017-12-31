@@ -14,31 +14,36 @@ import java.util.Iterator;
  * @author briansanchez
  */
 public class Laser {
-    Type type;
+    Ship.Type type;
     Color color;
     final int xpos;
     int ypos;
     int width;
     int height;
     int direction;
-    int speed;
+    int velocity;
     
     private static ArrayList<Laser> allLasers = new ArrayList<Laser>();
     
-    enum Type{
-        falcon,alien
-    }
-    
-    Laser(int _xpos, int _ypos, Type _type){
+    Laser(int _xpos, int _ypos,Ship.Type _type){
         type = _type;
         xpos = _xpos;
         ypos = _ypos;
+        type = _type;
         
         switch(type){
-            case falcon:
+            case Falcon:
                 width = Falcon.laserWidth;
-                height = Falcon.laserHieght;
-                speed = Falcon.laserSpeed;
+                height = Falcon.laserHeight;
+                velocity = Falcon.laserSpeed;
+                color = Falcon.laserColor;
+                break;
+            case TIE:
+                width = TIE_Fighter.laserWidth;
+                height = TIE_Fighter.laserHeight;
+                velocity = TIE_Fighter.laserSpeed;
+                color = TIE_Fighter.laserColor;
+                
         }
         
         allLasers.add(this);
@@ -47,7 +52,7 @@ public class Laser {
     public static void drawAllLasers(Graphics2D g){
         int num = 0;
         for(Laser laser : allLasers){
-            laser.drawLaser(g, laser.xpos, laser.ypos-=laser.speed, 0.0, 1.0,1.0);
+            laser.drawLaser(g, laser.xpos, laser.ypos+=laser.velocity, 0.0, 1.0,1.0);
             
           //  System.out.println("ypos: " + laser.ypos);
             
@@ -73,12 +78,16 @@ public class Laser {
         g.rotate(rot  * Math.PI/180.0);
         g.scale( xscale , yscale );
         
-        g.setColor(Color.GREEN);
+        g.setColor(color);
         g.fillRect(-width/2,-height/2,width,height);
 
         g.scale( 1.0/xscale,1.0/yscale );
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);
+    }
+    
+    public void checkForHit(){
+        
     }
     
 }

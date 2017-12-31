@@ -17,6 +17,7 @@ public class EnemyWave {
     int xdelta;
     int ydelta;
     int maxlength;
+    int numShooters = 0;
     static Ship.Type TIE = Ship.Type.TIE;
     ArrayList<Ship> enemyAL = new ArrayList<Ship>();
     
@@ -108,6 +109,37 @@ public class EnemyWave {
         for(Ship enemy : enemyAL){
             enemy.draw(g, main);
         }
+    }
+    
+    public void haveEnemyShoot(){
+        if(enemyAL.size() < numShooters){
+            numShooters = enemyAL.size();
+        }
+        
+        int numToPick = numShooters;
+        ArrayList<Integer> shooters = new ArrayList<Integer>();
+        
+        while(numToPick > 0){
+            int num = (int)(Math.random() * enemyAL.size());
+            boolean numGood = true;
+            for(int x : shooters){
+                if(num == x)
+                    numGood = false;
+            }
+            
+            if(numGood){
+                shooters.add(num);
+                numToPick--;
+            }
+        }
+        
+        if(numToPick <= 0){
+            for(int shooter : shooters){
+                enemyAL.get(shooter).fireLaser();
+            }
+        }
+        
+        numShooters++;
     }
     
     public ArrayList getEnemyAL(){

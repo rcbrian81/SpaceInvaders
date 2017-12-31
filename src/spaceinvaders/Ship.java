@@ -17,23 +17,25 @@ public class Ship {
     
     int xpos;
     int ypos;
-    int width;
-    int height;
     
     
     
-    Color color;
-    int laseHeight;
-    int laserWidth;
-    int laserSpeed;
     
     enum Type{
         Falcon,TIE,Tank,Mother,
     }
     
-    Ship(int _xpos,int _ypos){
+    Ship(int _xpos,int _ypos,Type _type){
         xpos = _xpos;
         ypos = _ypos;
+        type = _type;
+    }
+    Ship(Type _type){
+        type = _type;
+    }
+    
+    public void fireLaser(){
+        new Laser(xpos,(int)ypos,type);
     }
     ///////////////// Draw Code ////////////////////////////////////////////////////
     public  void draw(Graphics2D g,SpaceInvaders main){

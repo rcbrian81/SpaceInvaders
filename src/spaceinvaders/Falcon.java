@@ -12,29 +12,24 @@ import java.util.ArrayList;
  *
  * @author briansanchez
  */
-public class Falcon {
-    Image shipImage;
-    private int xpos;
-    private double ypos;
-    
+public class Falcon extends Ship{
     static Falcon player;
     
     static Color laserColor  =Color.green;
     static final int laserWidth = 2;
-    static final int laserHieght = 15; 
-    static final int laserSpeed = +20;
+    static final int laserHeight = 15; 
+    static int laserSpeed = -20;
     
     public static void initPlayer(){
         player = new Falcon();
     }
     Falcon(){
+        super(Ship.Type.Falcon);
         xpos = Window.getWidth2()/2;
         System.out.println(xpos+ "," + ypos);
     }
     
-    public void fireLaser(){
-        new Laser(xpos,(int)ypos,Laser.Type.falcon);
-    }
+    
     public void moveXPosBy(int d){
         xpos += d;
     }

@@ -200,8 +200,10 @@ public class SpaceInvaders extends JFrame implements Runnable {
             Falcon.initPlayer();
             player = Falcon.player; 
         }
+        
         if(inGame && timeCount % (int)(frameRate*1) == (int)(frameRate*1-1)){
             currentEnemyWave.move();
+            currentEnemyWave.haveEnemyShoot();
         }
             timeCount++;
         
