@@ -22,8 +22,7 @@ public class Laser {
     int height;
     int direction;
     int velocity;
-    
-    private static ArrayList<Laser> allLasers = new ArrayList<Laser>();
+    private static ArrayList<Laser> lasers = new ArrayList<Laser>();
     
     Laser(int _xpos, int _ypos,Ship.Type _type){
         type = _type;
@@ -46,31 +45,23 @@ public class Laser {
                 
         }
         
-        allLasers.add(this);
+        lasers.add(this);
     }
     
-    public static void drawAllLasers(Graphics2D g){
-        int num = 0;
-        for(Laser laser : allLasers){
-            laser.drawLaser(g, laser.xpos, laser.ypos+=laser.velocity, 0.0, 1.0,1.0);
-            
-          //  System.out.println("ypos: " + laser.ypos);
-            
-            System.out.println(num);
-            num++;
+    public static void drawAllLasers(Graphics2D g,boolean inGame){
+        for(Laser laser : lasers){
+            if(inGame)
+                laser.ypos += laser.velocity;
+            laser.drawLaser(g, laser.xpos, laser.ypos, 0.0, 1.0,1.0);
         }
         
-        for (Iterator<Laser> iterator = allLasers.iterator(); iterator.hasNext(); ) {
-        Laser laser = iterator.next();
-        if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
-            iterator.remove();
+        for (Iterator<Laser> iterator = lasers.iterator(); iterator.hasNext(); ) {
+            Laser laser = iterator.next();
+            if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
+                iterator.remove();
+            }
         }
-}
         
-    }
-    
-    public void delete(){
-        allLasers.remove(this);
     }
     
     public void drawLaser(Graphics2D g,int xpos,int ypos,double rot,double xscale,double yscale){
@@ -80,14 +71,72 @@ public class Laser {
         
         g.setColor(color);
         g.fillRect(-width/2,-height/2,width,height);
+        g.setColor(Color.yellow);
+        g.drawRect(0,0,width/2,height/2);
+        
+        
+        
+        g.setColor(Color.yellow);
+        g.setFont(new Font("Arial",Font.PLAIN,15));
+        g.drawString(" " + xpos + "," + ypos, width, height);
+        
+        
+        
 
         g.scale( 1.0/xscale,1.0/yscale );
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);
     }
     
-    public void checkForHit(){
+    public static void checkForHit(EnemyWave currWave){
+            ArrayList<Ship> ships = currWave.getEnemyAL();
+            
+            
+            for (Iterator<Laser> laserIter = lasers.iterator(); laserIter.hasNext(); ) {
+                Laser laser = laserIter.next();
+                
+                if(laser.type == Ship.Type.Falcon){
+                    for(Iterator<Ship> shipIter = ships.iterator(); shipIter.hasNext();){
+                        Ship ship = shipIter.next();
+
+                        boolean shipHit = compareLaserToShip(laser,ship);
+
+                        if(shipHit){
+                            Game.numEnemyShips--;
+                            shipIter.remove();
+                            laserIter.remove();
+                        }
+
+                    }
+                }
+                else if(laser.type != Falcon.Type.Falcon){
+                    boolean shipHit = compareLaserToShip(laser,Game.player);
+                    
+                    if(shipHit)
+                        Game.playerHit();
+                }
+            }
         
     }
+    
+    private static boolean compareLaserToShip(Laser laser,Ship ship){
+        int shipTop = ship.topPos;
+        int shipBottom = ship.bottomPos;
+        int shipRight = ship.rightPos;
+        int shipLeft = ship.leftPos;
+        int xpos = laser.xpos;
+        int ypos = laser.ypos;
+        
+        if(shipLeft < xpos && xpos < shipRight)
+            if(shipTop < ypos && ypos< shipBottom)
+            return true;
+        
+        return false;
+    }
+    public static void clearLasers(){
+        lasers.clear();
+    }
+    
+      
     
 }

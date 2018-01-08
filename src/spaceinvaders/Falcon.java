@@ -13,20 +13,16 @@ import java.util.ArrayList;
  * @author briansanchez
  */
 public class Falcon extends Ship{
-    static Falcon player;
     
     static Color laserColor  =Color.green;
     static final int laserWidth = 2;
     static final int laserHeight = 15; 
-    static int laserSpeed = -20;
+    static final int laserSpeed = -10;
     
-    public static void initPlayer(){
-        player = new Falcon();
-    }
+    
     Falcon(){
         super(Ship.Type.Falcon);
         xpos = Window.getWidth2()/2;
-        System.out.println(xpos+ "," + ypos);
     }
     
     
@@ -43,10 +39,14 @@ public class Falcon extends Ship{
         
         drawShipImage(g,Window.getX(xpos),Window.getDoubeY(ypos),
         0,.17,.17,main);
+        
+        g.setColor(Color.YELLOW);
+        g.setFont(new Font("Arial",Font.PLAIN,15));
+        g.drawString("" + topPos, xpos-10, (int)ypos+30);
     }
-    private void drawShipImage(Graphics2D g,int xpos,double ypos,
+    private void drawShipImage(Graphics2D g,int xpos,double ypos2,
     double rot,double xscale,double yscale,SpaceInvaders main){
-        g.translate(xpos,ypos);
+        g.translate(xpos,ypos2);
         g.scale( xscale , yscale );
         
         int width = main.MillenniumFalconImage.getWidth(main);
@@ -56,7 +56,7 @@ public class Falcon extends Ship{
         g.drawImage(main.MillenniumFalconImage,-width/2,-height/2,width,height,main);
         
         g.scale( 1.0/xscale,1.0/yscale );
-        g.translate(-xpos,-ypos);
+        g.translate(-xpos,-ypos2);
     }
     
 ///////////////// Accessors ////////////////////////////////////////////////////

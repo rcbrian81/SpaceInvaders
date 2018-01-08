@@ -59,7 +59,7 @@ public class Menu {
 //// Perform Button Action /////////////////////////////////////////////////////
     private static void performButtonAcion(){
         System.out.println("Button Pressed");
-        System.out.println(num);
+        //System.out.println(num);
         num++;
         inMenu = false;
     }

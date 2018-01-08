@@ -1,58 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package spaceinvaders;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-/**
- *
- * @author briansanchez
- */
 public class EnemyWave {
     static int moveDistance = 15;
     int xdelta;
     int ydelta;
-    int maxlength;
-    int numShooters = 0;
+    int minShooters;
+    int maxShooters = 5;
+    int numShooters;
     static Ship.Type TIE = Ship.Type.TIE;
     ArrayList<Ship> enemyAL = new ArrayList<Ship>();
     
     public static Ship.Type wave1[][] = {
-        {TIE,TIE,TIE},
-        {TIE,null,TIE},
-        {TIE,TIE,TIE}
+        {null,TIE,null,TIE,null,TIE,null,null},
+        {null,null,TIE,null,TIE,null,null,null},
+        {null,null,null,null,null,null,null,null},
+        {null,null,null,null,null,null,null,null},
+        {null,null,null,null,null,null,null,null},
+        {null,null,null,null,null,null,null,null},
+        {null,null,null,null,null,null,null,null}
     };
     public static Ship.Type wave2[][] = {
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
-    };
-    public static Ship.Type wave3[][] = {
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE},
-        {TIE,TIE,null,TIE,TIE,null,TIE,TIE}
-    };
-    public static Ship.Type wave4[][] = {
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,null,TIE,TIE,TIE,TIE,null,TIE},
-        {TIE,TIE,TIE,null,null,TIE,TIE,TIE},
-        {TIE,TIE,TIE,null,null,TIE,TIE,TIE},
-        {TIE,null,TIE,TIE,TIE,TIE,null,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
-    };
-    public static Ship.Type wave5[][] = {
         {TIE,TIE,TIE,null,null,TIE,TIE,TIE},
         {TIE,null,TIE,null,null,TIE,null,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
@@ -61,7 +31,7 @@ public class EnemyWave {
         {TIE,TIE,TIE,null,null,TIE,TIE,TIE}
             
     };
-    public static Ship.Type wave6[][] = {
+    public static Ship.Type wave3[][] = {
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
         {TIE,null,TIE,null,null,TIE,null,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
@@ -70,6 +40,17 @@ public class EnemyWave {
         {TIE,null,TIE,null,null,TIE,null,TIE},
         {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
     };
+    public static Ship.Type waveFinal[][] = {
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
+        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
+    };
+    
+    
     EnemyWave(Ship.Type wave[][]){
         ydelta = (Window.getHeight2() / 2) / (wave.length * 2);
         for(int y=0;y<wave.length;y++){
@@ -87,44 +68,11 @@ public class EnemyWave {
             }
         }
     }
-    // Window.getX(0)+column*Window.getWidth2()/Board.numColumns
     public void drawEnemyShips(Graphics2D g, SpaceInvaders main){
         for(Ship enemy : enemyAL){
             enemy.draw(g, main);
         }
     }
-    
-    public void haveEnemyShoot(){
-        if(enemyAL.size() < numShooters){
-            numShooters = enemyAL.size();
-        }
-        
-        int numToPick = numShooters;
-        ArrayList<Integer> shooters = new ArrayList<Integer>();
-        
-        while(numToPick > 0){
-            int num = (int)(Math.random() * enemyAL.size());
-            boolean numGood = true;
-            for(int x : shooters){
-                if(num == x)
-                    numGood = false;
-            }
-            
-            if(numGood){
-                shooters.add(num);
-                numToPick--;
-            }
-        }
-        
-        if(numToPick <= 0){
-            for(int shooter : shooters){
-                enemyAL.get(shooter).fireLaser();
-            }
-        }
-        
-        numShooters++;
-    }
-    
     public ArrayList getEnemyAL(){
         return enemyAL;
     }
@@ -136,6 +84,28 @@ public class EnemyWave {
                 enemy.ypos -= moveDistance;
             else
                 enemy.ypos += moveDistance;
+            
+            enemy.updateTestPositions();
         }
+    }
+    
+    public void haveEnemyShoot(){
+        if(ranNum(0,3) == 2){
+            minShooters++;
+        }
+        if(minShooters > enemyAL.size()){
+            maxShooters = enemyAL.size();
+            minShooters = maxShooters;
+        }
+        
+        for(int i =0;i<minShooters;i++){
+            int shooter = (int)(Math.random() * enemyAL.size());
+            enemyAL.get(shooter).fireLaser();
+        }
+        
+    }
+    private  int ranNum(int minNum, int maxNum){
+        int possNums = maxNum - minNum;
+        return (int)(Math.random() * possNums + minNum);
     }
 }
