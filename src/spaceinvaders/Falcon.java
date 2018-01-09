@@ -29,6 +29,10 @@ public class Falcon extends Ship{
     
     public void moveXPosBy(int d){
         xpos += d;
+        updateTestPositions();
+    }
+    public void resetPos(){
+        xpos = Window.getWidth2()/2;
     }
     
     
@@ -36,6 +40,7 @@ public class Falcon extends Ship{
     
 ///////////////// Draw Code ////////////////////////////////////////////////////
     public void draw(Graphics2D g,SpaceInvaders main){
+        
         ypos = Window.getY(Window.getHeight2() / 100 * 100);
         
         drawShipImage(g,Window.getX(xpos),Window.getDoubeY(ypos),
@@ -43,19 +48,26 @@ public class Falcon extends Ship{
         
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Arial",Font.PLAIN,15));
-        g.drawString("" + topPos, xpos-10, (int)ypos+30);
+        g.drawString("" + topPos, xpos-10, ypos-45);
+        g.drawString("" + leftPos, xpos-55, ypos+10);
+        g.drawString("" + rightPos, xpos+55, ypos+10);
+        
+         g.drawString("" + xpos + "," + ypos, 700, 700);
     }
     private void drawShipImage(Graphics2D g,int xpos,double ypos2,
     double rot,double xscale,double yscale,SpaceInvaders main){
         g.translate(xpos,ypos2);
         g.scale( xscale , yscale );
         
-        int width = main.MillenniumFalconImage.getWidth(main);
-        int height = main.MillenniumFalconImage.getHeight(main);
+        int w = main.MillenniumFalconImage.getWidth(main);
+        int h = main.MillenniumFalconImage.getHeight(main);
         
         
-        g.drawImage(main.MillenniumFalconImage,-width/2,-height/2,width,height,main);
+        g.drawImage(main.MillenniumFalconImage,-w/2,-h/2,w,h,main);
         
+        width = roundDouble(w * xscale);
+        height = roundDouble(h * yscale);
+                
         g.scale( 1.0/xscale,1.0/yscale );
         g.translate(-xpos,-ypos2);
     }

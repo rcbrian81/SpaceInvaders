@@ -42,6 +42,14 @@ public class Laser {
                 height = TIE_Fighter.laserHeight;
                 velocity = TIE_Fighter.laserSpeed;
                 color = TIE_Fighter.laserColor;
+                break;
+            case Slave:
+                width = SlaveOne.laserWidth;
+                height = SlaveOne.laserHeight;
+                velocity = SlaveOne.laserSpeed;
+                color = SlaveOne.laserColor;
+                break;
+            default :
                 
         }
         
@@ -73,10 +81,11 @@ public class Laser {
         g.fillRect(-width/2,-height/2,width,height);
         
         
-//        
-//        g.setColor(Color.yellow);
-//        g.setFont(new Font("Arial",Font.PLAIN,15));
-//        g.drawString(" " + xpos + "," + ypos, width, height);
+        if(type != Ship.Type.Falcon){
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial",Font.PLAIN,15));
+            g.drawString(" " + xpos + "," + ypos, width, height);
+        }
         
         
         
@@ -109,15 +118,20 @@ public class Laser {
                 }
                 else if(laser.type != Falcon.Type.Falcon){
                     boolean shipHit = compareLaserToShip(laser,Game.player);
-                    
-                    if(shipHit)
+                    System.out.println("chcking");
+                    if(shipHit){
                         Game.playerHit();
+                        laserIter.remove();
+                    }
+                    
                 }
             }
         
     }
     
     private static boolean compareLaserToShip(Laser laser,Ship ship){
+        //if(laser.type != Ship.Type.Falcon)
+        //System.out.println("comparint To Falcon");
         int shipTop = ship.topPos;
         int shipBottom = ship.bottomPos;
         int shipRight = ship.rightPos;

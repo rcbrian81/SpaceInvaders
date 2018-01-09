@@ -8,7 +8,7 @@ public class EnemyWave {
     int xdelta;
     int ydelta;
     int minShooters;
-    int maxShooters = 5;
+    int maxShooters = 2;
     int numShooters;
     static Ship.Type TIE1 = Ship.Type.TIE;
     static Ship.Type Slav = Ship.Type.Slave;
@@ -92,6 +92,8 @@ public class EnemyWave {
                 case Slave:
                     enemy.draw(0.03,0.03,g, main);
                     break;
+                default :
+                    
             }
             
         }

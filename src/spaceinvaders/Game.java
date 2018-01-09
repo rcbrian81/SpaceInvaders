@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class Game {
     static boolean inGame;
+    static boolean gameOver;
     static EnemyWave currWave;
     static Falcon player;
     static int numEnemyShips;
@@ -20,6 +21,8 @@ public class Game {
 ///////////////////////////init Game Code///////////////////////////////////////    
     public static void initNewGame(){
         Menu.init();
+        Laser.clearLasers();
+        gameOver = false;
         inGame = false;
         gameWon = false;
         player = new Falcon();
@@ -28,9 +31,10 @@ public class Game {
     }
     
     private static void initRoundOne(){
-        currWave = new EnemyWave(EnemyWave.waveFinal);
+        currWave = new EnemyWave(EnemyWave.wave1);
         numEnemyShips = currWave.getEnemyAL().size();
         round = 1;
+        player.resetPos();
         roundWon = false;
         
     }
@@ -38,18 +42,21 @@ public class Game {
         currWave = new EnemyWave(EnemyWave.wave2);
         numEnemyShips = currWave.getEnemyAL().size();
         round = 2;
+        player.resetPos();
         roundWon = false;
     }
     private static void initRoundThree(){
-        currWave = new EnemyWave(EnemyWave.waveFinal);
+        currWave = new EnemyWave(EnemyWave.wave3);
         numEnemyShips = currWave.getEnemyAL().size();
         round = 3;
+        player.resetPos();
         roundWon = false;
     }
     private static void initFinalRound(){
         currWave = new EnemyWave(EnemyWave.waveFinal);
         numEnemyShips = currWave.getEnemyAL().size();
         round = finalRound;
+        player.resetPos();
         roundWon = false;
     }
     private static void moveToNextRound(){
@@ -61,12 +68,16 @@ public class Game {
                 initRoundTwo();
                 break;
             case 2:
-                initRoundThree();
+                initFinalRound();
                 break;
             case finalRound:
                 gameWon = true;
                 break;
         }
+    }
+    private static void gameOver(){
+        gameOver = true;
+        inGame = false;
     }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,11 +90,16 @@ public class Game {
         if(Menu.isOpen())
             Menu.drawMain(g);
         
+        
+        g.setColor(Color.yellow);
+        g.setFont(new Font("Arial",Font.PLAIN,35));
         if(gameWon){
-            g.setColor(Color.yellow);
-            g.setFont(new Font("Arial",Font.PLAIN,35));
-            g.drawString("YOU WIN", Window.WINDOW_WIDTH/4, Window.WINDOW_HEIGHT/3);
+            g.drawString("Game Over. YOU WIN!!", Window.WINDOW_WIDTH/4, Window.WINDOW_HEIGHT/3);
+        }else if(gameOver){
+            g.drawString("Game Over. You Lost.", Window.WINDOW_WIDTH/4, Window.WINDOW_HEIGHT/3);
         }
+        
+        g.drawString("" + numLives, 500, 500);
         
     }
     
@@ -94,6 +110,8 @@ public class Game {
         }
         if(inGame && main.timeCount % (int)(main.frameRate*1) == (int)(main.frameRate*1-1))
             currWave.haveEnemyShoot();
+        
+        if(inGame)
         Laser.checkForHit(currWave);
         
         if(numEnemyShips == 0){
@@ -103,8 +121,8 @@ public class Game {
     
     public static void playerHit(){
         numLives--;
-        System.out.println(" -- Player Hit --");
-        System.out.println(" Lives: " + numLives);
+        if(numLives <= 0)
+            gameOver();
     }
     
     
@@ -116,6 +134,8 @@ public class Game {
     public static void leftButtonPressed(){
         if(inGame)
             player.moveXPosBy(-25);
+        
+        
     }
     public static void spaceButtonpressed(){
         if(inGame)

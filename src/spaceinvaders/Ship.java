@@ -77,19 +77,6 @@ public class Ship {
         
         g.drawImage(image,-w/2,-h/2,w,h,main);
         
-        
-        
-       // g.drawImage(image,-width/2,-height/2,width,height,obj); 
-        g.setColor(Color.green);
-        if(hit){
-            g.setColor(Color.green);
-            g.fillRect(-width/2,-height/2,width,height);
-        }
-        
-        
-        
-        
-        
         width = roundDouble(w * xscale);
         height = roundDouble(h * yscale);
         
