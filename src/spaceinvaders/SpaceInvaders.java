@@ -14,6 +14,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
     static Image backgroundImage;
     static Image MillenniumFalconImage;
     static Image TIEFighterImage;
+    static Image SlaveOneImage;
     Falcon player;
     
     double frameRate = 40.0;
@@ -144,7 +145,12 @@ public class SpaceInvaders extends JFrame implements Runnable {
 /////////////////////////////////////////////////////////////////////////
     public void reset() {
 
-        Game.initNewGame();
+        
+            backgroundImage = Toolkit.getDefaultToolkit().getImage("./images/background.jpg");
+            MillenniumFalconImage = Toolkit.getDefaultToolkit().getImage("./images/MillenniumFalcon.png");
+            TIEFighterImage = Toolkit.getDefaultToolkit().getImage("./images/TIE_Fighter.png");
+            SlaveOneImage = Toolkit.getDefaultToolkit().getImage("./images/SlaveOne.png");
+            Game.initNewGame();
     }
 /////////////////////////////////////////////////////////////////////////
     public void animate() {
@@ -157,9 +163,6 @@ public class SpaceInvaders extends JFrame implements Runnable {
          
             reset();
             
-            backgroundImage = Toolkit.getDefaultToolkit().getImage("./images/background.jpg");
-            MillenniumFalconImage = Toolkit.getDefaultToolkit().getImage("./images/MillenniumFalcon.png");
-            TIEFighterImage = Toolkit.getDefaultToolkit().getImage("./images/TIE_Fighter.png");
         }
         
         Game.Update(this);

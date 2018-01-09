@@ -23,6 +23,7 @@ public class Falcon extends Ship{
     Falcon(){
         super(Ship.Type.Falcon);
         xpos = Window.getWidth2()/2;
+        image = SpaceInvaders.MillenniumFalconImage;
     }
     
     

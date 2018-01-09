@@ -13,7 +13,7 @@ public class Game {
     static boolean gameWon;
     static int numLives;
     
-    static final int finalRound = 2;
+    static final int finalRound = 3;
     static boolean roundWon;
     static int round;
     
@@ -28,7 +28,7 @@ public class Game {
     }
     
     private static void initRoundOne(){
-        currWave = new EnemyWave(EnemyWave.wave1);
+        currWave = new EnemyWave(EnemyWave.waveFinal);
         numEnemyShips = currWave.getEnemyAL().size();
         round = 1;
         roundWon = false;
@@ -38,6 +38,12 @@ public class Game {
         currWave = new EnemyWave(EnemyWave.wave2);
         numEnemyShips = currWave.getEnemyAL().size();
         round = 2;
+        roundWon = false;
+    }
+    private static void initRoundThree(){
+        currWave = new EnemyWave(EnemyWave.waveFinal);
+        numEnemyShips = currWave.getEnemyAL().size();
+        round = 3;
         roundWon = false;
     }
     private static void initFinalRound(){
@@ -54,9 +60,9 @@ public class Game {
             case 1:
                 initRoundTwo();
                 break;
-//            case 2:
-//                initFinalRound();
-//                break;
+            case 2:
+                initRoundThree();
+                break;
             case finalRound:
                 gameWon = true;
                 break;
@@ -86,14 +92,11 @@ public class Game {
             currWave.move();
             
         }
-        if(inGame && main.timeCount % (int)(main.frameRate*2) == (int)(main.frameRate*2-1))
+        if(inGame && main.timeCount % (int)(main.frameRate*1) == (int)(main.frameRate*1-1))
             currWave.haveEnemyShoot();
         Laser.checkForHit(currWave);
         
         if(numEnemyShips == 0){
-            roundWon = true;
-        }
-        if(roundWon){
             moveToNextRound();
         }
     }

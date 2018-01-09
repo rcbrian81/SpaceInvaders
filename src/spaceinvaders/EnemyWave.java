@@ -10,12 +10,14 @@ public class EnemyWave {
     int minShooters;
     int maxShooters = 5;
     int numShooters;
-    static Ship.Type TIE = Ship.Type.TIE;
+    static Ship.Type TIE1 = Ship.Type.TIE;
+    static Ship.Type Slav = Ship.Type.Slave;
+    static Ship.Type Deth = Ship.Type.Death;
     ArrayList<Ship> enemyAL = new ArrayList<Ship>();
     
     public static Ship.Type wave1[][] = {
-        {null,TIE,null,TIE,null,TIE,null,null},
-        {null,null,TIE,null,TIE,null,null,null},
+        {null,TIE1,null,TIE1,null,TIE1,null,null},
+        {null,null,TIE1,null,TIE1,null,null,null},
         {null,null,null,null,null,null,null,null},
         {null,null,null,null,null,null,null,null},
         {null,null,null,null,null,null,null,null},
@@ -23,31 +25,40 @@ public class EnemyWave {
         {null,null,null,null,null,null,null,null}
     };
     public static Ship.Type wave2[][] = {
-        {TIE,TIE,TIE,null,null,TIE,TIE,TIE},
-        {TIE,null,TIE,null,null,TIE,null,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,null,TIE,null,null,TIE,null,TIE},
-        {TIE,TIE,TIE,null,null,TIE,TIE,TIE}
+        {TIE1,Slav,null,TIE1,TIE1,null,Slav,TIE1},
+        {TIE1,TIE1,TIE1,null,null,TIE1,TIE1,TIE1},
+        {TIE1,null,TIE1,null,null,TIE1,null,TIE1},
+        {null,null,null,null,null,null,null,null},
+        {null,null,null,null,null,null,null,null}
             
     };
     public static Ship.Type wave3[][] = {
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,null,TIE,null,null,TIE,null,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {null,null,null,TIE,TIE,null,null,null},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,null,TIE,null,null,TIE,null,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
+        {TIE1,TIE1,TIE1,null,null,TIE1,TIE1,TIE1},
+        {TIE1,null,TIE1,null,null,TIE1,null,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,null,TIE1,null,null,TIE1,null,TIE1},
+        {TIE1,TIE1,TIE1,null,null,TIE1,TIE1,TIE1}
+            
     };
+    
     public static Ship.Type waveFinal[][] = {
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE},
-        {TIE,TIE,TIE,TIE,TIE,TIE,TIE,TIE}
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,null,TIE1,null,null,TIE1,null,TIE1},
+        {TIE1,null,TIE1,TIE1,TIE1,TIE1,null,TIE1},
+        {null,Slav,null,TIE1,TIE1,null,Slav,null},
+        {TIE1,null,TIE1,TIE1,TIE1,TIE1,null,TIE1},
+        {TIE1,null,TIE1,null,null,TIE1,null,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1}
+    };
+    public static Ship.Type waveFull[][] = {
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1},
+        {TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1,TIE1}
     };
     
     
@@ -57,12 +68,16 @@ public class EnemyWave {
             for(int x=0;x<wave[y].length;x++){
                 xdelta = Window.getWidth2()/ (wave[y].length * 2);
                 if(wave[y][x] != null){
+                    int ypos = (y  * 2 + 1) * ydelta;
+                    int xpos = (x * 2 + 1) * xdelta;
+                    
                     switch(wave[y][x]){
                         case TIE : 
-                            int ypos = (y  * 2 + 1) * ydelta;
-                            int xpos = (x * 2 + 1) * xdelta;
-                            
                             enemyAL.add(new TIE_Fighter(xpos, ypos));
+                            break;
+                        case Slave:
+                            enemyAL.add(new SlaveOne(xpos, ypos));
+                            break;
                     }
                 }
             }
@@ -70,7 +85,15 @@ public class EnemyWave {
     }
     public void drawEnemyShips(Graphics2D g, SpaceInvaders main){
         for(Ship enemy : enemyAL){
-            enemy.draw(g, main);
+            switch(enemy.type){
+                case TIE:
+                    enemy.draw(0.1,0.1,g, main);
+                    break;
+                case Slave:
+                    enemy.draw(0.03,0.03,g, main);
+                    break;
+            }
+            
         }
     }
     public ArrayList getEnemyAL(){

@@ -71,14 +71,12 @@ public class Laser {
         
         g.setColor(color);
         g.fillRect(-width/2,-height/2,width,height);
-        g.setColor(Color.yellow);
-        g.drawRect(0,0,width/2,height/2);
         
         
-        
-        g.setColor(Color.yellow);
-        g.setFont(new Font("Arial",Font.PLAIN,15));
-        g.drawString(" " + xpos + "," + ypos, width, height);
+//        
+//        g.setColor(Color.yellow);
+//        g.setFont(new Font("Arial",Font.PLAIN,15));
+//        g.drawString(" " + xpos + "," + ypos, width, height);
         
         
         

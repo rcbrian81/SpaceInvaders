@@ -32,7 +32,10 @@ public class Ship {
    
     
     enum Type{
-        Falcon,TIE,Tank,Mother,
+        Falcon,
+        TIE,
+        Slave,
+        Death,
     }
     
     Ship(int _xpos,int _ypos,Type _type){
@@ -40,50 +43,39 @@ public class Ship {
         ypos = _ypos;
         type = _type;
         updateTestPositions();
-        loadImage(this);
     }
     Ship(Type _type){
         type = _type;
         updateTestPositions();
-        loadImage(this);
-    }
-    private static void loadImage(Ship ship){
-        Type type = ship.type;
-        switch(type){
-            case TIE:
-                ship.image = SpaceInvaders.TIEFighterImage;
-            case Falcon:
-                ship.image = SpaceInvaders.MillenniumFalconImage;
-        }
     }
     
     public void fireLaser(){
         new Laser(xpos,(int)ypos,type);
     }
     ///////////////// Draw Code ////////////////////////////////////////////////////
-    public  void draw(Graphics2D g,SpaceInvaders main){
+    public void draw(double xscale, double yscale,Graphics2D g,SpaceInvaders main){
         
         drawShipImage(g,Window.getX(xpos),Window.getY(ypos),
-        0,.1,.1,main);
+        0,xscale,yscale,main);
         
-        g.setColor(Color.GREEN);
-        g.setFont(new Font("Arial",Font.PLAIN,15));
-        g.drawString("" + topPos, xpos-10, ypos+10);
-        g.setColor(Color.BLUE);
-        g.drawString("" + bottomPos, xpos-10, ypos+45);
-        g.setColor(Color.GREEN);
-        g.drawString("" + rightPos, xpos-40, ypos+20);
+//        g.setColor(Color.GREEN);
+//        g.setFont(new Font("Arial",Font.PLAIN,15));
+//        g.drawString("" + topPos, xpos-10, ypos+10);
+//        g.setColor(Color.BLUE);
+//        g.drawString("" + bottomPos, xpos-10, ypos+45);
+//        g.setColor(Color.GREEN);
+//        g.drawString("" + rightPos, xpos-40, ypos+20);
     }
     private void drawShipImage(Graphics2D g,int xpos,int ypos,
     double rot,double xscale,double yscale,SpaceInvaders main){
         g.translate(xpos,ypos);
         g.scale( xscale , yscale );
         
-        int w = main.TIEFighterImage.getWidth(main);
-        int h = main.TIEFighterImage.getHeight(main);
+        int w = image.getWidth(main);
+        int h = image.getHeight(main);
         
         
-        g.drawImage(main.TIEFighterImage,-w/2,-h/2,w,h,main);
+        g.drawImage(image,-w/2,-h/2,w,h,main);
         
         
         
