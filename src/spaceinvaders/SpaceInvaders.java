@@ -1,5 +1,12 @@
 package spaceinvaders;
 
+import java.io.File;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.*;
 import java.io.*; 
 import java.awt.*;
 import java.awt.geom.*;
@@ -19,6 +26,10 @@ public class SpaceInvaders extends JFrame implements Runnable {
     static Image ExplosionImage;
     Falcon player;
     
+    sound shootSound = null;
+    sound themeSound = null;
+
+    
     double frameRate = 40.0;
     int timeCount;
 
@@ -33,6 +44,11 @@ public class SpaceInvaders extends JFrame implements Runnable {
     }
 
     public SpaceInvaders() {
+        if(timeCount == 12000)
+           themeSound = new sound("theme.wav");
+
+        themeSound = new sound("theme.wav");
+        
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if (e.BUTTON1 == e.getButton()) { 
@@ -74,6 +90,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
                 } else if (e.VK_RIGHT == e.getKeyCode()) {
                     Game.rightButtonPressed();
                 }else if (e.VK_SPACE == e.getKeyCode()) {
+                    shootSound = new sound("Gunshot.wav");
                     Game.spaceButtonpressed();
                 }else if (e.VK_ENTER == e.getKeyCode()) {
                     Game.enterButtonPressed();
