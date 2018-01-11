@@ -17,7 +17,7 @@ public class Falcon extends Ship{
     static Color laserColor  =Color.green;
     static final int laserWidth = 2;
     static final int laserHeight = 15; 
-    static final int laserSpeed = -10;
+    static final int laserSpeed = -15;
     
     
     Falcon(){
@@ -29,10 +29,19 @@ public class Falcon extends Ship{
     
     public void moveXPosBy(int d){
         xpos += d;
+        if(xpos <= 0 ){
+            xpos = 1;
+        }else if(xpos >= Window.getWidth2())
+            xpos = Window.getWidth2() - 1;
         updateTestPositions();
+        
     }
     public void updateXPos(int _xpos){
         xpos = _xpos;
+        
+        if(xpos <= 0 ){
+            xpos = 1;
+        }
     }
     public void resetPos(){
         xpos = Window.getWidth2()/2;
@@ -44,18 +53,10 @@ public class Falcon extends Ship{
 ///////////////// Draw Code ////////////////////////////////////////////////////
     public void draw(Graphics2D g,SpaceInvaders main){
         
-        ypos = Window.getY(Window.getHeight2() / 100 * 100);
+        ypos = Window.getHeight2() - (width/2) - 10;
         
         drawShipImage(g,Window.getX(xpos),Window.getDoubeY(ypos),
         0,.17,.17,main);
-    
-        g.setColor(Color.YELLOW);
-        g.setFont(new Font("Arial",Font.PLAIN,15));
-        g.drawString("" + topPos, xpos-10, ypos-45);
-        g.drawString("" + leftPos, xpos-55, ypos+10);
-        g.drawString("" + rightPos, xpos+55, ypos+10);
-        
-         g.drawString("" + xpos + "," + ypos, 700, 700);
     }
     private void drawShipImage(Graphics2D g,int xpos,double ypos2,
     double rot,double xscale,double yscale,SpaceInvaders main){
@@ -68,7 +69,7 @@ public class Falcon extends Ship{
         
         g.drawImage(main.MillenniumFalconImage,-w/2,-h/2,w,h,main);
         g.setColor(Color.PINK);
-        g.drawRect(-w/2,-h/2,w,h);
+       // g.drawRect(-w/2,-h/2,w,h);
         
         width = roundDouble(w * xscale);
         height = roundDouble(h * yscale);

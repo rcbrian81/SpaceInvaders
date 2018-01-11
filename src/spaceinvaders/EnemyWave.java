@@ -8,8 +8,10 @@ public class EnemyWave {
     int xdelta;
     int ydelta;
     int minShooters;
-    int maxShooters = 2;
+    int maxShooters;
     int numShooters;
+    int shootFREQ;
+    int metiorFREQ;
     static Ship.Type TIE1 = Ship.Type.TIE;
     static Ship.Type Slav = Ship.Type.Slave;
     static Ship.Type Deth = Ship.Type.Death;
@@ -62,7 +64,7 @@ public class EnemyWave {
     };
     
     
-    EnemyWave(Ship.Type wave[][]){
+    EnemyWave(Ship.Type wave[][], int _maxShooters, int _shootFREQ, int _metiorFREQ){
         ydelta = (Window.getHeight2() / 2) / (wave.length * 2);
         for(int y=0;y<wave.length;y++){
             for(int x=0;x<wave[y].length;x++){
@@ -82,6 +84,10 @@ public class EnemyWave {
                 }
             }
         }
+        
+        maxShooters = _maxShooters;
+        shootFREQ = _shootFREQ;
+        metiorFREQ = _metiorFREQ;
     }
     public void drawEnemyShips(Graphics2D g, SpaceInvaders main){
         for(Ship enemy : enemyAL){
@@ -113,6 +119,16 @@ public class EnemyWave {
             enemy.updateTestPositions();
         }
     }
+    public void mustMove(){
+        for(Ship enemy : enemyAL){
+            if(enemy.type == Ship.Type.Slave){
+                enemy.xpos += enemy.xMoveDis;
+                if(enemy.xpos < 0 || enemy.xpos > Window.getWidth2())
+                    enemy.xMoveDis = -enemy.xMoveDis;
+            }
+            enemy.updateTestPositions();
+        }
+    }
     
     public void haveEnemyShoot(){
         if(ranNum(0,3) == 2){
@@ -122,6 +138,9 @@ public class EnemyWave {
             maxShooters = enemyAL.size();
             minShooters = maxShooters;
         }
+        if(minShooters > maxShooters){
+            
+        }minShooters = maxShooters;
         
         for(int i =0;i<minShooters;i++){
             int shooter = (int)(Math.random() * enemyAL.size());
@@ -132,5 +151,13 @@ public class EnemyWave {
     private  int ranNum(int minNum, int maxNum){
         int possNums = maxNum - minNum;
         return (int)(Math.random() * possNums + minNum);
+    }
+    
+    public int getNumLives(){
+        int totalLives = 0;
+        for(Ship ship : enemyAL){
+            totalLives += ship.strength;
+        }
+        return totalLives;
     }
 }

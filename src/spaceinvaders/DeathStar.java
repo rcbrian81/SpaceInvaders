@@ -12,7 +12,7 @@ package spaceinvaders;
 public class DeathStar extends Ship{
     
     DeathStar(int xpos,int ypos){
-        super(xpos,ypos,Ship.Type.Death);
+        super(xpos,ypos,Ship.Type.Death,15);
     }
     
 }

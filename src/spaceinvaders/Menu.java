@@ -27,22 +27,23 @@ public class Menu {
     
     public static void drawMain(Graphics2D g){
         
-        xpos = Window.getWidth2() / 4;
-        ypos = Window.getHeight2() / 4;
+        xpos = Window.getWidth2() / 2;
+        ypos = Window.getHeight2() / 2;
         height = Window.getHeight2() / 2;
         width = Window.getWidth2() /2;
         
-        g.setColor(Color.BLACK);
-        g.fillRect(xpos, ypos, width, height);
-        g.setColor(Color.GREEN);
-        g.drawRect(xpos, ypos, width, height);
+        drawBoardBack(xpos,ypos,width,height,g);
         
-        buttonXPos = getX(height/2);
-        buttonYPos = getY(width / 5 * 4);
+        buttonXPos = width/2;
+        buttonYPos = height / 5 * 4;
         buttonWidth = width / 5 * 2 ;
         buttonHeight = height / 10;
         
-        createButton("Start Button",buttonXPos,buttonYPos,buttonWidth,buttonHeight,Color.ORANGE,g);
+        createButton("Start",getX(buttonXPos),getY(buttonYPos),buttonWidth,buttonHeight,Color.ORANGE,g);
+        
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial",Font.PLAIN,40));
+        g.drawString("Welcome", getX(width/10 * 3), getY(height/3));
         
         
     }
@@ -51,24 +52,37 @@ public class Menu {
         x = x;
         y = y;
         
-        if(x > buttonXPos - (buttonWidth / 2) && x < buttonXPos + (buttonWidth / 2) &&
-           y > buttonYPos - (buttonHeight / 2) && y < buttonYPos + (buttonHeight / 2)){
+        if(x > getX(buttonXPos) - (buttonWidth / 2) && x < getX(buttonXPos) + (buttonWidth / 2) &&
+           y > getY(buttonYPos) - (buttonHeight / 2) && y < getY(buttonYPos) + (buttonHeight / 2)){
             performButtonAcion();
         }
     }
 //// Perform Button Action /////////////////////////////////////////////////////
     private static void performButtonAcion(){
-        System.out.println("Button Pressed");
-        //System.out.println(num);
         num++;
         inMenu = false;
     }
 //// Creating Buttons //////////////////////////////////////////////////////////
-    private static void createButton(String name,int xpos,int ypos,int width,int height,Color color,Graphics2D g){
+    private static void drawBoardBack(int xpos,int ypos,int width,int height,Graphics2D g){
+        
+        g.translate(xpos,ypos);
+        
+        g.setColor(Color.black);
+        g.fillRect(-width/2, -height/2, width, height);
+        g.setColor(Color.green);
+        g.drawRect(-width/2, -height/2, width, height);
+        
+        
+        g.translate(-xpos,-ypos);
+    }
+    private static void createButton(String string,int xpos,int ypos,int width,int height,Color color,Graphics2D g){
         g.translate(xpos,ypos);
         g.setColor(color);
         g.drawRect(-width/2, -height/2, width, height);
         g.fillRect(-width/2, -height/2, width, height);
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial",Font.PLAIN,35));
+        g.drawString(string, -width/10 * 2, height/2);
         
         g.translate(-xpos,-ypos);
     }
@@ -81,10 +95,11 @@ public class Menu {
         return inMenu;
     }
     public static int getY(int y){
-        return y + ypos ;
+        return y + (ypos - (height/2)) ;
+        
     }
     public static int getX(int x){
-        return x + xpos;
+        return x + (xpos - (width/2));
     }
     
 }

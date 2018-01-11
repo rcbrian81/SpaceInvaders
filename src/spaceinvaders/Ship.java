@@ -25,6 +25,9 @@ public class Ship {
     int topPos;
     int bottomPos;
     
+    int strength;
+    int xMoveDis = 5;
+    
     boolean hit = false;
     static EnemyWave currentEnemyWave;
     
@@ -38,11 +41,16 @@ public class Ship {
         Death,
     }
     
-    Ship(int _xpos,int _ypos,Type _type){
+    Ship(int _xpos,int _ypos,Type _type,int _strength){
         xpos = _xpos;
         ypos = _ypos;
         type = _type;
+        strength = _strength;
         updateTestPositions();
+        if(xpos < Window.getWidth2()/2)
+            xMoveDis = -xMoveDis;
+        else
+            xMoveDis = xMoveDis;
     }
     Ship(Type _type){
         type = _type;
@@ -110,7 +118,12 @@ public class Ship {
          
      return num;
     } 
-    public void delete(){
+    public void hit(){
+        strength--;
+        if(strength <= 0)
+            delete();
+    }
+    private void delete(){
         Game.currWave.getEnemyAL().remove(this);
     }
     

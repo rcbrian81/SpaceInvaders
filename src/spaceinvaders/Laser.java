@@ -78,15 +78,6 @@ public class Laser {
         g.setColor(color);
         g.fillRect(-width/2,-height/2,width,height);
         
-        
-        if(type != Ship.Type.Falcon){
-            g.setColor(Color.RED);
-            g.setFont(new Font("Arial",Font.PLAIN,15));
-            g.drawString(" " + xpos + "," + ypos, width, height);
-        }
-        
-        
-        
 
         g.scale( 1.0/xscale,1.0/yscale );
         g.rotate(-rot  * Math.PI/180.0);
@@ -127,14 +118,12 @@ public class Laser {
             }
             
             for(Ship ship : hitShips){
-                ship.delete();
+                ship.hit();
             }
         
     }
     
     private static boolean compareLaserToShip(Laser laser,Ship ship){
-        //if(laser.type != Ship.Type.Falcon)
-        //System.out.println("comparint To Falcon");
         int shipTop = ship.topPos;
         int shipBottom = ship.bottomPos;
         int shipRight = ship.rightPos;

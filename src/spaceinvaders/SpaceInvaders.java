@@ -15,6 +15,8 @@ public class SpaceInvaders extends JFrame implements Runnable {
     static Image MillenniumFalconImage;
     static Image TIEFighterImage;
     static Image SlaveOneImage;
+    static Image MetiorImage;
+    static Image ExplosionImage;
     Falcon player;
     
     double frameRate = 40.0;
@@ -151,6 +153,8 @@ public class SpaceInvaders extends JFrame implements Runnable {
             MillenniumFalconImage = Toolkit.getDefaultToolkit().getImage("./images/MillenniumFalcon.png");
             TIEFighterImage = Toolkit.getDefaultToolkit().getImage("./images/TIE_Fighter.png");
             SlaveOneImage = Toolkit.getDefaultToolkit().getImage("./images/SlaveOne.png");
+            MetiorImage = Toolkit.getDefaultToolkit().getImage("./images/three.png");
+            ExplosionImage = Toolkit.getDefaultToolkit().getImage("./images/three.png");
             Game.initNewGame();
     }
 /////////////////////////////////////////////////////////////////////////
