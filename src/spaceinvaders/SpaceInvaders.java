@@ -55,6 +55,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
 
     addMouseMotionListener(new MouseMotionAdapter() {
       public void mouseMoved(MouseEvent e) {
+         // Game.player.updateXPos(e.getX());
         repaint();
       }
     });

@@ -57,14 +57,12 @@ public class Laser {
     }
     
     public static void drawAllLasers(Graphics2D g,boolean inGame){
-        for(Laser laser : lasers){
-            if(inGame)
-                laser.ypos += laser.velocity;
-            laser.drawLaser(g, laser.xpos, laser.ypos, 0.0, 1.0,1.0);
-        }
         
         for (Iterator<Laser> iterator = lasers.iterator(); iterator.hasNext(); ) {
             Laser laser = iterator.next();
+            if(inGame)
+                laser.ypos += laser.velocity;
+            laser.drawLaser(g, laser.xpos, laser.ypos, 0.0, 1.0,1.0);
             if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
                 iterator.remove();
             }
@@ -97,11 +95,12 @@ public class Laser {
     
     public static void checkForHit(EnemyWave currWave){
             ArrayList<Ship> ships = currWave.getEnemyAL();
+            ArrayList<Ship> hitShips = new ArrayList<Ship>();
             
             
             for (Iterator<Laser> laserIter = lasers.iterator(); laserIter.hasNext(); ) {
                 Laser laser = laserIter.next();
-                
+                Game.player.updateTestPositions();
                 if(laser.type == Ship.Type.Falcon){
                     for(Iterator<Ship> shipIter = ships.iterator(); shipIter.hasNext();){
                         Ship ship = shipIter.next();
@@ -110,7 +109,8 @@ public class Laser {
 
                         if(shipHit){
                             Game.numEnemyShips--;
-                            shipIter.remove();
+                        //    shipIter.remove();
+                            hitShips.add(ship);
                             laserIter.remove();
                         }
 
@@ -118,13 +118,16 @@ public class Laser {
                 }
                 else if(laser.type != Falcon.Type.Falcon){
                     boolean shipHit = compareLaserToShip(laser,Game.player);
-                    System.out.println("chcking");
                     if(shipHit){
                         Game.playerHit();
                         laserIter.remove();
                     }
                     
                 }
+            }
+            
+            for(Ship ship : hitShips){
+                ship.delete();
             }
         
     }

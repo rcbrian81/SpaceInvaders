@@ -110,6 +110,9 @@ public class Ship {
          
      return num;
     } 
+    public void delete(){
+        Game.currWave.getEnemyAL().remove(this);
+    }
     
     
     

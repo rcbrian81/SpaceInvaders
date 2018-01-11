@@ -31,6 +31,9 @@ public class Falcon extends Ship{
         xpos += d;
         updateTestPositions();
     }
+    public void updateXPos(int _xpos){
+        xpos = _xpos;
+    }
     public void resetPos(){
         xpos = Window.getWidth2()/2;
     }
@@ -45,7 +48,7 @@ public class Falcon extends Ship{
         
         drawShipImage(g,Window.getX(xpos),Window.getDoubeY(ypos),
         0,.17,.17,main);
-        
+    
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Arial",Font.PLAIN,15));
         g.drawString("" + topPos, xpos-10, ypos-45);
@@ -64,6 +67,8 @@ public class Falcon extends Ship{
         
         
         g.drawImage(main.MillenniumFalconImage,-w/2,-h/2,w,h,main);
+        g.setColor(Color.PINK);
+        g.drawRect(-w/2,-h/2,w,h);
         
         width = roundDouble(w * xscale);
         height = roundDouble(h * yscale);
