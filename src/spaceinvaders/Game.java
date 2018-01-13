@@ -9,7 +9,7 @@ public class Game {
     static EnemyWave currWave;
     static Falcon player;
     static int numEnemyShips;
-    static final int gameStartNumLives = 3;
+    static final int gameStartNumLives = 8;
     
     static boolean gameWon;
     static int numLives;
@@ -21,6 +21,8 @@ public class Game {
     static boolean roundWon;
     static int round;
     static String roundMessage;
+    static double hitTime = 0.1;
+    static double hitBoxTime;
     
 ///////////////////////////init Game Code///////////////////////////////////////    
     public static void initNewGame(){
@@ -32,6 +34,7 @@ public class Game {
         player = new Falcon();
         numLives = gameStartNumLives;
         initRoundOne();
+        resetLives();
     }
     
     private static void initRoundOne(){
@@ -52,6 +55,7 @@ public class Game {
         roundWon = false;
         roundMessage = "Round 2";
         roundStarted = false;
+        resetLives();
     }
     private static void initRoundThree(){
         currWave = new EnemyWave(EnemyWave.wave3,5,2,2);
@@ -61,6 +65,7 @@ public class Game {
         roundWon = false;
         roundMessage = "Round 3";
         roundStarted = false;
+        resetLives();
     }
     private static void initFinalRound(){
         currWave = new EnemyWave(EnemyWave.waveFinal,7,2,2);
@@ -70,6 +75,7 @@ public class Game {
         roundWon = false;
         roundMessage = "Final Round";
         roundStarted = false;
+        resetLives();
     }
     private static void moveToNextRound(){
         Laser.clearLasers();
@@ -108,7 +114,7 @@ public class Game {
         g.setFont(new Font("Arial",Font.PLAIN,35));
         if(!Menu.isOpen() && !inGame && !roundStarted){
             g.drawString(roundMessage, Window.WINDOW_WIDTH/3, Window.WINDOW_HEIGHT/3);
-            g.drawString("CLICK ENTER TO BEGIN", Window.WINDOW_WIDTH/4, Window.WINDOW_HEIGHT/3 * 2);
+            g.drawString("CLICK MOUSE TO BEGIN", Window.WINDOW_WIDTH/4, Window.WINDOW_HEIGHT/3 * 2);
         }
         g.setColor(Color.yellow);
         g.setFont(new Font("Arial",Font.PLAIN,35));
@@ -119,6 +125,7 @@ public class Game {
         }
         
         Metior.Draw(g,inGame,main);
+        Explosion.Draw(g, main);
         
     }
     
@@ -142,12 +149,24 @@ public class Game {
         if(numEnemyShips == 0){
             moveToNextRound();
         }
+        if(hitBoxTime == SpaceInvaders.frameRate * hitTime)
+            player.hit = false;
+        if(player.hit)
+            hitBoxTime++;
+        Laser.update();
+        Metior.update();
+        Explosion.update();
     }
     
     public static void playerHit(){
         numLives--;
         if(numLives <= 0)
             gameOver();
+        
+        player.hit = true;
+        hitBoxTime = 0;
+        SpaceInvaders.explosionSound = new sound("explosion2.wav");
+        
     }
     
     public static void drawLivesBox(Graphics2D g, SpaceInvaders main){
@@ -183,7 +202,15 @@ public class Game {
         else if(!Menu.isOpen() && inGame)
             inGame = false;
     }
-    public static void Name(){
-        
+    public static void mousPressed(){
+        if(!inGame && !gameOver){
+            inGame = true;
+            roundStarted = true;
+        }
+        if(inGame)
+            player.fireLaser();
+    }
+    public static void resetLives(){
+        numLives = gameStartNumLives;
     }
 }

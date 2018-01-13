@@ -18,6 +18,7 @@ public class Falcon extends Ship{
     static final int laserWidth = 2;
     static final int laserHeight = 15; 
     static final int laserSpeed = -15;
+    boolean hit;
     
     
     Falcon(){
@@ -66,10 +67,12 @@ public class Falcon extends Ship{
         int w = main.MillenniumFalconImage.getWidth(main);
         int h = main.MillenniumFalconImage.getHeight(main);
         
+        g.setColor(Color.red);
+        if(hit)
+        g.fillOval(-w/2,-h/2,w,h);
         
         g.drawImage(main.MillenniumFalconImage,-w/2,-h/2,w,h,main);
-        g.setColor(Color.PINK);
-       // g.drawRect(-w/2,-h/2,w,h);
+        
         
         width = roundDouble(w * xscale);
         height = roundDouble(h * yscale);

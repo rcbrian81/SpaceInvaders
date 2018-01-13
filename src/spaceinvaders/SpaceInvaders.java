@@ -26,11 +26,12 @@ public class SpaceInvaders extends JFrame implements Runnable {
     static Image ExplosionImage;
     Falcon player;
     
-    sound shootSound = null;
-    sound themeSound = null;
+    static sound shootSound = null;
+    static sound themeSound = null;
+    static sound explosionSound = null;
 
     
-    double frameRate = 40.0;
+    static double frameRate = 40.0;
     int timeCount;
 
     
@@ -49,13 +50,14 @@ public class SpaceInvaders extends JFrame implements Runnable {
 
         themeSound = new sound("theme.wav");
         
+        
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if (e.BUTTON1 == e.getButton()) { 
                     if(Menu.isOpen())
                         Menu.checkForPressedButton(e.getX(),e.getY());
                     else
-                        System.out.println("l: " + e.getX() + "," + e.getY());
+                        Game.mousPressed();
                 }
                 if (e.BUTTON3 == e.getButton()) {
                     
@@ -73,7 +75,8 @@ public class SpaceInvaders extends JFrame implements Runnable {
 
     addMouseMotionListener(new MouseMotionAdapter() {
       public void mouseMoved(MouseEvent e) {
-         // Game.player.updateXPos(e.getX());
+          if(Game.inGame)
+            Game.player.updateXPos(e.getX());
         repaint();
       }
     });
@@ -90,7 +93,6 @@ public class SpaceInvaders extends JFrame implements Runnable {
                 } else if (e.VK_RIGHT == e.getKeyCode()) {
                     Game.rightButtonPressed();
                 }else if (e.VK_SPACE == e.getKeyCode()) {
-                    shootSound = new sound("Gunshot.wav");
                     Game.spaceButtonpressed();
                 }else if (e.VK_ENTER == e.getKeyCode()) {
                     Game.enterButtonPressed();
@@ -171,7 +173,7 @@ public class SpaceInvaders extends JFrame implements Runnable {
             TIEFighterImage = Toolkit.getDefaultToolkit().getImage("./images/TIE_Fighter.png");
             SlaveOneImage = Toolkit.getDefaultToolkit().getImage("./images/SlaveOne.png");
             MetiorImage = Toolkit.getDefaultToolkit().getImage("./images/three.png");
-            ExplosionImage = Toolkit.getDefaultToolkit().getImage("./images/three.png");
+            ExplosionImage = Toolkit.getDefaultToolkit().getImage("./images/explosion.png");
             Game.initNewGame();
     }
 /////////////////////////////////////////////////////////////////////////

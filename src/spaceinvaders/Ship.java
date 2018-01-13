@@ -59,20 +59,13 @@ public class Ship {
     
     public void fireLaser(){
         new Laser(xpos,(int)ypos,type);
+        SpaceInvaders.shootSound = new sound("Gunshot.wav");
     }
     ///////////////// Draw Code ////////////////////////////////////////////////////
     public void draw(double xscale, double yscale,Graphics2D g,SpaceInvaders main){
         
         drawShipImage(g,Window.getX(xpos),Window.getY(ypos),
         0,xscale,yscale,main);
-        
-//        g.setColor(Color.GREEN);
-//        g.setFont(new Font("Arial",Font.PLAIN,15));
-//        g.drawString("" + topPos, xpos-10, ypos+10);
-//        g.setColor(Color.BLUE);
-//        g.drawString("" + bottomPos, xpos-10, ypos+45);
-//        g.setColor(Color.GREEN);
-//        g.drawString("" + rightPos, xpos-40, ypos+20);
     }
     private void drawShipImage(Graphics2D g,int xpos,int ypos,
     double rot,double xscale,double yscale,SpaceInvaders main){

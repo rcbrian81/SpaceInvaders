@@ -60,12 +60,8 @@ public class Laser {
         
         for (Iterator<Laser> iterator = lasers.iterator(); iterator.hasNext(); ) {
             Laser laser = iterator.next();
-            if(inGame)
-                laser.ypos += laser.velocity;
+            
             laser.drawLaser(g, laser.xpos, laser.ypos, 0.0, 1.0,1.0);
-            if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
-                iterator.remove();
-            }
         }
         
     }
@@ -84,9 +80,22 @@ public class Laser {
         g.translate(-xpos,-ypos);
     }
     
+    public static void update(){
+        for (Iterator<Laser> iterator = lasers.iterator(); iterator.hasNext(); ) {
+            Laser laser = iterator.next();
+            
+            if(Game.inGame)
+                laser.ypos += laser.velocity;
+            if (laser.ypos > Window.getY(Window.getHeight2()) || laser.ypos < Window.getY(0)) {
+                iterator.remove();
+            }
+        }
+    }
+    
     public static void checkForHit(EnemyWave currWave){
             ArrayList<Ship> ships = currWave.getEnemyAL();
             ArrayList<Ship> hitShips = new ArrayList<Ship>();
+            ArrayList<Laser> hitLasers = new ArrayList<Laser>();
             
             
             for (Iterator<Laser> laserIter = lasers.iterator(); laserIter.hasNext(); ) {
@@ -99,10 +108,14 @@ public class Laser {
                         boolean shipHit = compareLaserToShip(laser,ship);
 
                         if(shipHit){
-                            Game.numEnemyShips--;
-                        //    shipIter.remove();
-                            hitShips.add(ship);
                             laserIter.remove();
+                            Game.numEnemyShips--;
+                            ship.strength--;
+                            if(ship.strength <= 0){
+                                new sound("explosion.wav");
+                                new Explosion(ship.xpos,ship.ypos);
+                                shipIter.remove();
+                            }
                         }
 
                     }

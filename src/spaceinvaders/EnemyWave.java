@@ -2,6 +2,7 @@ package spaceinvaders;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class EnemyWave {
     static int moveDistance = 15;
@@ -90,7 +91,7 @@ public class EnemyWave {
         metiorFREQ = _metiorFREQ;
     }
     public void drawEnemyShips(Graphics2D g, SpaceInvaders main){
-        for(Ship enemy : enemyAL){
+        for (Ship enemy : enemyAL) {
             switch(enemy.type){
                 case TIE:
                     enemy.draw(0.1,0.1,g, main);
@@ -117,6 +118,9 @@ public class EnemyWave {
                 enemy.ypos += moveDistance;
             
             enemy.updateTestPositions();
+            
+            if(enemy.bottomPos > Window.getHeight2())
+                Game.gameOver = true;
         }
     }
     public void mustMove(){
